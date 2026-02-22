@@ -1,6 +1,12 @@
 class Solution {
     public int binaryGap(int n) 
     {
+        /*
+            VERY FIRST INTUTION : 
+            *convert to binary string first
+            *keep a track of current seen index of "1" & prev seen "1"
+            * return max distance
+         */
         String bin = Integer.toBinaryString(n);
         int max = 0;
         int prev = -1;
