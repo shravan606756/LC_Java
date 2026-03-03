@@ -1,37 +1,34 @@
 class Solution {
     public char findKthBit(int n, int k) 
     {
-        int flipcount = 0;
-
+        String ans = "0";
+        
         while(n>1)
         {
-            int length = (int) Math.pow(2,n)-1;
-            int mid = (length/2)+1;
-
-            if(k==mid)
-            {
-                if(flipcount%2==0)
-                {
-                    return '1';
-                }else{
-                    return '0';
-                }
-            }
-
-            else if(k>mid)
-            {
-                k = length-k+1;
-                flipcount = flipcount +1;
-            }
-
-            n=n-1;
+            String temp = ans;
+            String inv = invert(temp);
+            String rev = new StringBuilder(inv).reverse().toString();
+            ans = ans + "1" + rev;
+            n--;
         }
 
-        if(flipcount%2==0)
+        return ans.charAt(k-1);
+    }
+
+    public String invert(String s)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for(int i=0 ; i<s.length() ; i++)
         {
-            return '0';
-        }else{
-            return '1';
+            if(s.charAt(i)=='1')
+            {
+                sb.append("0");
+            }else{
+                sb.append("1");
+            }
         }
+
+        return sb.toString();
     }
 }
