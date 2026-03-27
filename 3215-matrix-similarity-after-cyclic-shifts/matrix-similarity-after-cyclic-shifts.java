@@ -14,7 +14,7 @@ class Solution {
                     }
                 } else {
                     // odd row , right shift
-                    if (mat[i][j] != mat[i][(j + k + n) % n]) {
+                    if (mat[i][j] != mat[i][(j - k + n) % n]) {
                         return false;
                     }
                 }
