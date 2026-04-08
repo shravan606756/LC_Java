@@ -14,21 +14,49 @@
  * }
  */
 class Solution {
-    public int minDepth(TreeNode root) {
-        return dfs(root);
+    public int minDepth(TreeNode root) 
+    {
+        return bfs(root);   
     }
-    int dfs(TreeNode root)
+
+    int bfs(TreeNode root)
     {
         if(root==null)
         {
             return 0;
         }
 
-        if(root.left==null && root.right==null) return 1;
+        Queue<TreeNode> q = new LinkedList<>();
 
-        int l = root.left!=null ? dfs(root.left) : Integer.MAX_VALUE;
-        int r = root.right!=null ? dfs(root.right) : Integer.MAX_VALUE;
+        q.offer(root);
+        int d=1;
 
-        return Math.min(l,r)+1;
+        while(!q.isEmpty())
+        {
+            int size = q.size();
+
+            while(size-- > 0)
+            {
+                TreeNode t = q.peek();
+                q.poll();
+
+                if(t.left==null && t.right==null)
+                {
+                    return d;
+                }
+
+                if(t.left!=null)
+                {
+                    q.offer(t.left);
+                }
+                if(t.right!=null)
+                {
+                    q.offer(t.right);
+                }
+            }
+            d++;
+        }
+
+        return -1;
     }
 }
