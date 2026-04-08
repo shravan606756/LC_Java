@@ -16,24 +16,44 @@
 class Solution {
     int max=-1;
     int res = 0;
-    public int findBottomLeftValue(TreeNode root) {
-        func(root , 0);
-        return res;        
+    public int findBottomLeftValue(TreeNode root)
+    {
+       bfs(root);
+       return res;
     }
 
-    void func(TreeNode root , int currDepth)
+    void bfs(TreeNode root)
     {
         if(root==null)
         {
             return;
         }
 
-        if(currDepth>max)
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+
+        while(!q.isEmpty())
         {
-            max=currDepth;
-            res=root.val;
+            int size = q.size();
+            List<Integer> temp = new ArrayList<>(size);
+
+            while(size>0)
+            {
+                TreeNode t = q.peek();
+                q.poll();
+                temp.add(t.val);
+
+                if(t.left!=null)
+                {
+                    q.offer(t.left);
+                }
+                if(t.right!=null)
+                {
+                    q.offer(t.right);
+                }
+                size--;
+            }
+            res=temp.get(0);
         }
-        func(root.left,currDepth+1);
-        func(root.right ,currDepth+1);
     }
 }
