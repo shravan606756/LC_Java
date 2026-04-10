@@ -19,58 +19,64 @@ class Solution {
     TreeNode wrong1sec=null;
     TreeNode wrong2first=null;
     TreeNode wrong2sec=null;
+    TreeNode prev=null;
 
     public void recoverTree(TreeNode root) 
     {
-        List<TreeNode> list = new ArrayList<>();
-        Inorder(root , list);
-        Refactor(list);
+        func(root);
+
+        if(wrong==1)
+        {
+            swap(wrong1first , wrong1sec);
+        }
+
+        else
+        {
+            swap(wrong1first , wrong2sec);
+        }
     }
 
-    public void Inorder(TreeNode root , List<TreeNode> list)
+    public void func(TreeNode root)
     {
         if(root==null)
         {
             return;
         }
 
-        Inorder(root.left , list);
-        list.add(root);
-        Inorder(root.right , list);
-    }
+        func(root.left);
+        //core logic : 
 
-    public void Refactor(List<TreeNode> list)
-    {
-        for(int i=1 ; i<list.size() ; i++)
+        if(prev==null)
         {
-            if(list.get(i-1).val>=list.get(i).val)
+            prev=root;
+        }
+
+        else
+        {
+            if(prev.val>=root.val)
             {
-                wrong++;
-                if(wrong==1)
+                if(wrong==0)
                 {
-                    wrong1first=list.get(i-1);
-                    wrong1sec=list.get(i);
+                    wrong1first=prev;
+                    wrong1sec=root;
+                    wrong++;
                 }
+
                 else{
-                    wrong2first=list.get(i-1);
-                    wrong2sec=list.get(i);
+                    wrong2first=prev;
+                    wrong2sec=root;
+                    wrong++;
                 }
             }
-        }
-
-        if(wrong==1)
-        {
-            swap(wrong1first , wrong1sec);
-        }
-        else{
-            swap(wrong1first , wrong2sec);
-        }
-    }
+            prev=root;
+        }        
+        func(root.right);
+    }   
 
     public void swap(TreeNode a , TreeNode b)
     {
         int temp = a.val;
         a.val=b.val;
         b.val=temp;
-    }
+    } 
 }
