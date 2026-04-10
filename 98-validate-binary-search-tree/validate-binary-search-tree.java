@@ -14,34 +14,35 @@
  * }
  */
 class Solution {
-    public boolean isValidBST(TreeNode root) {
-        ArrayList<Integer> list = new ArrayList<>();
-        Inorder(root,list);
-
-        return check(list);
+    TreeNode prev=null;
+    public boolean isValidBST(TreeNode root)
+    {
+        return validate(root);
     }
 
-    public void Inorder(TreeNode root , ArrayList<Integer>list)
+    public boolean validate(TreeNode root)
     {
         if(root==null)
         {
-            return;
+            return true;
         }
 
-        Inorder(root.left,list);
-        list.add(root.val);
-        Inorder(root.right,list);
-    }
-
-    public boolean check(ArrayList<Integer> list)
-    {
-        for(int i=1 ; i<list.size() ; i++)
+        if(!validate(root.left)) return false;
+        //core logic : 
+        if(prev==null)
         {
-            if(list.get(i)<=list.get(i-1))
+            prev=root;
+        }
+        else{
+            if(prev!=null && root.val<=prev.val)
             {
                 return false;
             }
+            prev=root;
         }
+
+        if(!validate(root.right)) return false;
+
         return true;
     }
 }
