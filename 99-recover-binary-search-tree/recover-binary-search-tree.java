@@ -14,41 +14,63 @@
  * }
  */
 class Solution {
-
-    TreeNode first = null;
-    TreeNode second = null;
-    TreeNode prev = new TreeNode(Integer.MIN_VALUE);
+    int wrong=0;
+    TreeNode wrong1first=null;
+    TreeNode wrong1sec=null;
+    TreeNode wrong2first=null;
+    TreeNode wrong2sec=null;
 
     public void recoverTree(TreeNode root) 
     {
-        inorder(root);   
-
-        int temp = first.val;
-        first.val=second.val;
-        second.val = temp; 
+        List<TreeNode> list = new ArrayList<>();
+        Inorder(root , list);
+        Refactor(list);
     }
 
-    public void inorder(TreeNode root)
+    public void Inorder(TreeNode root , List<TreeNode> list)
     {
         if(root==null)
         {
             return;
         }
 
-        inorder(root.left);
+        Inorder(root.left , list);
+        list.add(root);
+        Inorder(root.right , list);
+    }
 
-        //print/logic
-        if(first==null && prev.val>root.val)
+    public void Refactor(List<TreeNode> list)
+    {
+        for(int i=1 ; i<list.size() ; i++)
         {
-            first = prev;
+            if(list.get(i-1).val>=list.get(i).val)
+            {
+                wrong++;
+                if(wrong==1)
+                {
+                    wrong1first=list.get(i-1);
+                    wrong1sec=list.get(i);
+                }
+                else{
+                    wrong2first=list.get(i-1);
+                    wrong2sec=list.get(i);
+                }
+            }
         }
 
-        if(first!=null && prev.val>root.val)
+        if(wrong==1)
         {
-            second = root;
+            swap(wrong1first , wrong1sec);
         }
-        prev=root;
+        else{
+            swap(wrong1first , wrong2sec);
+        }
+    }
 
-        inorder(root.right);
+    public void swap(TreeNode a , TreeNode b)
+    {
+        int temp = a.val;
+        a.val=b.val;
+        b.val=temp;
     }
 }
