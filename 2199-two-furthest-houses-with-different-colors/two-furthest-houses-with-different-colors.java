@@ -3,18 +3,20 @@ class Solution {
     {
         int n = arr.length;
         int dist=0,max=-1;
-        for(int i = 0; i <n ; i++)
+        
+        int i=0;
+        while(arr[i]==arr[n-1])
         {
-            for(int j = i+1 ; j<n ; j++)
-            {
-                if(arr[i]!=arr[j])
-                {
-                    dist = Math.abs(j-i);
-                    max = Math.max(max , dist);
-                }
-            }
+            i++;
         }
+        max = Math.max(max , Math.abs(i-(n-1)));
 
+        i = n-1;
+        while(arr[i]==arr[0])
+        {
+            i--;
+        }
+        max = Math.max(max , i);
         return max;
     }
 }
