@@ -16,25 +16,44 @@
 class Solution {
     public List<Integer> rightSideView(TreeNode root) 
     {
-        List <Integer> res = new ArrayList<>();
-
-        rightview(root , res , 0);
-        return res;    
+        return bfs(root); 
     }
 
-    public void rightview(TreeNode curr , List<Integer> res , int level)
+    public List<Integer> bfs(TreeNode root)
     {
-        if(curr == null)
+        List<Integer> res = new ArrayList<>();
+        if(root==null)
         {
-            return;
+            return res;
         }
+        Queue<TreeNode> q = new LinkedList<>();
 
-        if(res.size()==level)
-        {
-            res.add(curr.val);
-        }
+        q.offer(root);
+        while(!q.isEmpty())
+        {   
+            int n = q.size();
+            TreeNode x = null;
+            while(n>0)
+            {
+                x = q.peek();
+                q.poll();
 
-        rightview(curr.right , res , level+1);
-        rightview(curr.left , res , level+1);
-    }
+                if(x.left!=null)
+                {
+                    q.offer(x.left);
+                }
+
+                
+                if(x.right!=null)
+                {
+                    q.offer(x.right);
+                }
+
+                n--;
+            }
+            res.add(x.val);
+        }   
+
+        return res;     
+    }        
 }
