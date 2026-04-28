@@ -16,9 +16,9 @@ class Solution {
             return false;
         }
 
-        Boolean noFlip = flipEquiv(r1.left , r2.left) && flipEquiv(r1.right,r2.right);
-        Boolean Flip = flipEquiv(r1.left , r2.right) && flipEquiv(r1.right,r2.left);
+        boolean same = flipEquiv(r1.left , r2.left) && flipEquiv(r1.right,r2.right);
+        boolean inverted = flipEquiv(r1.left , r2.right) && flipEquiv(r1.right , r2.left);
 
-        return noFlip || Flip;
+        return same || inverted;
     }
 }
