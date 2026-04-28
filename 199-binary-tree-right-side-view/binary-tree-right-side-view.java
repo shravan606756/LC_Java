@@ -16,10 +16,11 @@
 class Solution {
     public List<Integer> rightSideView(TreeNode root) 
     {
-        return bfs(root); 
+        List<Integer> res = new ArrayList<>();
+        return dfs(root , res , 1); 
     }
 
-    public List<Integer> bfs(TreeNode root)
+    /*public List<Integer> bfs(TreeNode root)
     {
         List<Integer> res = new ArrayList<>();
         if(root==null)
@@ -55,5 +56,21 @@ class Solution {
         }   
 
         return res;     
-    }        
+    } */
+
+    public List<Integer> dfs(TreeNode root , List<Integer>res ,int level)
+    {
+        if(root==null){
+            return res;
+        }
+
+        if(res.size()<level)
+        {
+            res.add(root.val);
+        }
+
+        dfs(root.right ,res, level+1);
+        dfs(root.left ,res, level+1);
+        return res;
+    }       
 }
