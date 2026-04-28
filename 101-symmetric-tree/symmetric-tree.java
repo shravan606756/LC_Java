@@ -20,31 +20,29 @@ class Solution {
         {
             return true;
         }
-        
-        return isMirror(root.left , root.right);
+        return same(root.left , root.right);
     }
 
-    public static Boolean isMirror(TreeNode p , TreeNode q)
+    public boolean same(TreeNode l , TreeNode r)
     {
-        if(p==null && q==null)
+        if(l==null && r==null)
         {
             return true;
         }
-
-        if(p==null || q==null)
+        if(l==null || r==null)
         {
             return false;
         }
 
-        if(p.val!=q.val)
+        if(l.val!=r.val)
         {
             return false;
         }
 
-        Boolean r1 = isMirror(p.left , q.right);
-        Boolean r2 = isMirror(p.right , q.left);
+        boolean left = same(l.left , r.right);
+        boolean right = same(l.right , r.left);
 
-        if(r1==true && r2==true)
+        if(left==true && right==true)
         {
             return true;
         }
