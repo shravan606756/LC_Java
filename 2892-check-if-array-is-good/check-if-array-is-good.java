@@ -1,18 +1,32 @@
-import java.util.Arrays;
-
 class Solution {
-    public boolean isGood(int[] arr) {
-
-        Arrays.sort(arr);
-
+    public boolean isGood(int[] arr) 
+    {
         int n = arr.length;
 
-        for (int i = 0; i < n - 1; i++) {
-            if (arr[i] != i + 1) {
-                return false;
+        java.util.Arrays.sort(arr);
+
+        boolean firstCheck = true;
+
+        for(int i = 0; i < n-1; i++)
+        {
+            if(arr[i] != i+1)
+            {
+                firstCheck = false;
             }
         }
 
-        return arr[n - 1] == n - 1;
+        boolean secondCheck = false;
+
+        if(arr[n-1] == n-1)
+        {
+            secondCheck = true;
+        }
+
+        if(firstCheck == true && secondCheck == true)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
