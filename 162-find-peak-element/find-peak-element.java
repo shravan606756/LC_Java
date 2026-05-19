@@ -3,24 +3,23 @@ class Solution {
     {
         int n = arr.length;
 
-        if(n==1 || arr[0]>arr[1])
-        {
-            return 0;
-        }    
+        int low = 0 , high = n-1;
 
-        for(int i=1 ; i<n-1 ; i++)
+        while(low<high)
         {
-            if(arr[i]>arr[i-1] && arr[i]>arr[i+1])
+            int mid = low+(high-low)/2;
+
+            if(arr[mid+1]<arr[mid])
             {
-                return i;
+                high=mid;
+            }
+
+            else
+            {
+                low=mid+1;
             }
         }
 
-        if(arr[n-1]>arr[n-2])
-        {
-            return n-1;
-        }
-
-        return -1;
+        return low;
     }
 }
