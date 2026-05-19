@@ -9,7 +9,7 @@ class Solution {
             {
                 return arr1[i];
             }
-            if(arr1[i]>arr2[j])
+            else if(arr1[i]>arr2[j])
             {
                 j++;
             }
