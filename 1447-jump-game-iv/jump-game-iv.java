@@ -15,6 +15,10 @@ class Solution {
         */
 
         int n = arr.length , jump=0;
+        if(n==1)
+        {
+            return 0;
+        }
         Map<Integer , List<Integer>> map = new HashMap<>();
 
         for(int i=0 ; i<n ; i++)
@@ -41,7 +45,7 @@ class Solution {
                 {
                     return jump;
                 }
-                
+
                 //case 1
                 if(curr+1 < n && visit[curr+1]==false)
                 {
