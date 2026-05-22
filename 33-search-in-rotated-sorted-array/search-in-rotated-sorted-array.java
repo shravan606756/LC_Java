@@ -1,41 +1,54 @@
 class Solution {
     public int search(int[] arr, int target) 
     {
-        int n=arr.length;
-        int low=0 , high=n-1;
+        int l = 0 , r = arr.length-1;
 
-        while(low<=high)
+        int res = ModifiedBS(arr , target , l , r);
+
+        return res;
+    }
+
+    public int ModifiedBS(int arr[] , int target , int l , int r)
+    {
+        if(l>r)
         {
-            int mid=(low+high)/2;
+            return -1;
+        }
 
-            if(arr[mid]==target)
-            {
-                return mid;
-            }
+        int n = arr.length;
+        int mid = l + (r-l) / 2;
 
-            if(arr[low]<=arr[mid])
+        if(arr[mid]==target)
+        {
+            return mid;
+        }
+
+        //is in right
+        if(arr[mid]>=arr[l])
+        {
+            if(arr[mid]>=target && arr[l]<=target)
             {
-                if(target>=arr[low] && target<=arr[mid])
-                {
-                    high=mid-1;
-                }
-                else{
-                    low=mid+1;
-                }
+                return ModifiedBS(arr , target , l , mid-1);
             }
 
             else
             {
-                if(target>=arr[mid] && arr[high]>=target)
-                {
-                    low=mid+1;
-                }
-                else
-                {
-                    high=mid-1;
-                }
+                return ModifiedBS(arr , target , mid+1 , r);
+            }
+        }  
+        
+        //is int left
+        else
+        {
+            if(arr[mid]<=target && arr[r]>=target)
+            {
+               return ModifiedBS(arr , target , mid+1 , r);
+            }
+
+            else
+            {
+                return ModifiedBS(arr , target , l , mid-1);
             }
         }
-        return -1;
     }
 }
