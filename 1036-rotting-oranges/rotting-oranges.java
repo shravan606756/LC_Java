@@ -1,11 +1,11 @@
-class pair
+class Pair
 {
-    int n1=0 , n2=0;
+    int n = 0 , m = 0;
 
-    public pair(int n1 , int n2)
+    Pair(int n , int m)
     {
-        this.n1 = n1;
-        this.n2 = n2;
+        this.n = n;
+        this.m = m;
     }
 }
 
@@ -14,24 +14,22 @@ class Solution {
     {
         int n = grid.length;
         int m = grid[0].length;
-        int fresh=0 , time=0;
 
         int x[] = {1,-1,0,0};
-        int y[] = {0,0,-1,1};
+        int y[] = {0,0,1,-1};
 
-        Queue<pair> q = new LinkedList<>();
+        int fresh=0 , time=0;
+        Queue <Pair> q = new LinkedList<>();
         for(int i=0 ; i<n ; i++)
         {
             for(int j=0 ; j<m ; j++)
             {
                 if(grid[i][j]==2)
                 {
-                    q.offer(new pair(i,j));
-                    grid[i][j] = -2; 
-                }                
-
-                else if(grid[i][j]==1)
-                {
+                    q.offer(new Pair(i,j));
+                    grid[i][j] = -2;
+                }
+                else if(grid[i][j]==1){
                     fresh++;
                 }
             }
@@ -43,43 +41,43 @@ class Solution {
 
             while(size>0)
             {
-                pair p = q.peek();
+                Pair z = q.peek();
                 q.poll();
 
-                int r = p.n1;
-                int c = p.n2;
+                int r = z.n;
+                int c = z.m;
 
                 for(int k=0 ; k<4 ; k++)
                 {
-                    int row = r + x[k];
-                    int col = c + y[k];
-                    if( isValid(row , col , n ,m) && grid[row][col]==1)
+                    int row = r+x[k];
+                    int col = c+y[k];
+
+                    if(isValid(row , col , n , m) && grid[row][col]==1)
                     {
-                        q.offer(new pair(row , col));
-                        grid[row][col] = -2;
+                        q.offer(new Pair(row,col));
+                        grid[row][col]=-2;
                         fresh--;
                     }
-                }   
+                }
+
                 size--;
             }
+
             time++;
         }
 
-        if(fresh>0)
-        {
-            return -1;
-        }
+        if(fresh>0) return -1;
 
         return time;
     }
 
-    public boolean isValid(int i , int j ,int n , int m)
+    public static boolean isValid(int i, int j, int n, int m)
     {
         if(i<0 || i>=n || j<0 || j>=m)
         {
             return false;
         }
-
+        
         return true;
     }
 }
