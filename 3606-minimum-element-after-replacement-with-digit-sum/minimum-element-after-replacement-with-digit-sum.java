@@ -5,7 +5,7 @@ class Solution {
 
         //n -> sum=n.1+n.2+...
         int min = Integer.MAX_VALUE;
-        for(int x : arr)
+        /*for(int x : arr)
         {
             String s = String.valueOf(x);
             int z=0;
@@ -16,6 +16,18 @@ class Solution {
             min = Math.min(min , z);
         }   
 
-        return min; 
+        return min;*/
+
+        for(int x:arr)
+        {
+            int sum=0;
+            while(x>0)
+            {
+                sum+=x%10;
+                x/=10;
+            }
+            min = Math.min(min,sum);
+        } 
+        return min;
     }
 }
