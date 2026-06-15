@@ -12,7 +12,6 @@ class Solution {
                 else freq.put(s.charAt(low),count);
                 low++;
             }
-
             int len = high-low+1;
             max = Math.max(max, len);
         }
