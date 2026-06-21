@@ -7,7 +7,7 @@ class Solution {
         {
             if(costs[i]>coins)
             {
-                continue;
+                break;
             }
 
             coins=coins-costs[i];
