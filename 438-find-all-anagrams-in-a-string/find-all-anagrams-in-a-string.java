@@ -1,52 +1,48 @@
-class Solution 
-{
+class Solution {
     public List<Integer> findAnagrams(String s, String p) 
     {
-        int n1 = s.length();
-        int n2 = p.length();
-
+        HashMap<Character, Integer> have  = new HashMap<>();
+        HashMap<Character, Integer> need  = new HashMap<>();
+        
         List<Integer> res = new ArrayList<>();
-        Map<Character , Integer> have = new HashMap<>();
-        Map<Character , Integer> need = new HashMap<>();
 
-        for(int i=0 ; i<n2 ; i++)
+        for(char x : p.toCharArray())
         {
-            char x = p.charAt(i);
-            need.put(x , need.getOrDefault(x,0)+1);
+            need.put(x, need.getOrDefault(x, 0)+1);
         }
-        int l=0;
-        for(int h=0 ; h<n1 ; h++)
+        int low=0;
+        for(int high=0 ; high<s.length() ; high++)
         {
-            char x = s.charAt(h);
-            have.put(x , have.getOrDefault(x,0)+1);
+            have.put(s.charAt(high), have.getOrDefault(s.charAt(high), 0)+1);
 
-            while(h-l+1 > n2)
+            while(high-low+1>p.length())
             {
-                char d = s.charAt(l);
-                int f = have.get(d);
-                have.put(d , f-1);
+                char d = s.charAt(low);
+                int count = have.get(d);
+                count--;
 
-                if(have.get(d)==0)
+                if(count==0)
                 {
                     have.remove(d);
                 }
-                l++;
-            }
 
-            if(h-l+1==n2 && isValid(have , need))
-            {
-                res.add(l);
+                else{
+                    have.put(d, count);
+                }
+
+                low++;
             }
+            
+            if(high-low+1==p.length() && isValid(have, need)) res.add(low);
         }
 
         return res;
     }
 
-    public boolean isValid( Map<Character , Integer> have ,  Map<Character , Integer> need)
+    public boolean isValid(HashMap<Character, Integer> have, HashMap<Character, Integer> need)
     {
-        if(have.size()!=need.size())
-        {
-            return false;
+        if(have.size()!=need.size()){
+                return false;
         }
 
         for(char c : need.keySet())
@@ -56,11 +52,12 @@ class Solution
                 return false;
             }
 
-            if(! have.get(c).equals(need.get(c)))
+            if(!have.get(c).equals(need.get(c)))
             {
                 return false;
             }
         }
+
         return true;
     }
 }
