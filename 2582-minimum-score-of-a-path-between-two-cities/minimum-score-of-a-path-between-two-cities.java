@@ -5,8 +5,7 @@ class Solution {
         for (int i = 0; i <= n; i++) {
             adj.add(new ArrayList<>());
         }
-
-        // Build graph
+        
         for (int[] road : roads) {
             int u = road[0];
             int v = road[1];
