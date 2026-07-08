@@ -1,22 +1,30 @@
 class Solution {
     public int findDuplicate(int[] arr) 
     {
-        Map<Integer, Integer> freq = new HashMap<>();
+        int slow = arr[0];
+        int fast = arr[0];
 
-        for(int x : arr)
+        while(true)
         {
-            freq.put(x, freq.getOrDefault(x, 0)+1);
-        } 
+            //find cyc's meeting point
 
-        for(Map.Entry<Integer, Integer> entry : freq.entrySet())
-        {
-            int key = entry.getKey();
+            slow = arr[slow];
+            fast = arr[arr[fast]];
 
-            if(freq.get(key)>1){
-                return key;
+            if(slow==fast)
+            {
+                break;
             }
         }
 
-        return -1;
+        slow = arr[0];
+
+        while(slow!=fast)
+        {
+            slow = arr[slow];
+            fast = arr[fast];
+        }
+
+        return slow;
     }
 }
