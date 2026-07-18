@@ -1,28 +1,25 @@
 class Solution {
     public int findDuplicate(int[] arr) 
     {
-        int slow = arr[0];
-        int fast = arr[0];
+        //simulating as a linkedlist
+
+        int slow = arr[0]; //head
+        int head = arr[0];
 
         while(true)
         {
-            //find cyc's meeting point
-
             slow = arr[slow];
-            fast = arr[arr[fast]];
+            head = arr[arr[head]];
 
-            if(slow==fast)
-            {
-                break;
-            }
+            if(slow==head) break;
         }
 
         slow = arr[0];
 
-        while(slow!=fast)
+        while(slow!=head)
         {
             slow = arr[slow];
-            fast = arr[fast];
+            head = arr[head];
         }
 
         return slow;
