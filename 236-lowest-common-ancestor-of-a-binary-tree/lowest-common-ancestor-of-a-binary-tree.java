@@ -1,95 +1,30 @@
 class Solution {
-
-    HashMap<TreeNode,Integer> map = new HashMap<>();
-    ArrayList<TreeNode> rev = new ArrayList<>();
-    int idx = 0;
-
+    TreeNode ans=null;
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
     {
-        number(root);
-
-        int row = idx;
-        int col = (int)(Math.log(row)/Math.log(2))+1;
-
-        int[][] parent = new int[row][col];
-        int[] depth = new int[row];
-
-        for(int i=0;i<row;i++)
-        {
-            Arrays.fill(parent[i],-1);
-        }
-
-        dfs(root,-1,0,parent,depth);
-
-        for(int j=1;j<col;j++)
-        {
-            for(int i=0;i<row;i++)
-            {
-                if(parent[i][j-1]!=-1)
-                {
-                    parent[i][j]=parent[parent[i][j-1]][j-1];
-                }
-            }
-        }
-
-        int u = map.get(p);
-        int v = map.get(q);
-
-        if(depth[u] < depth[v])
-        {
-            int t = u;
-            u = v;
-            v = t;
-        }
-
-        int diff = depth[u]-depth[v];
-
-        for(int j=0;j<col;j++)
-        {
-            if(((diff>>j)&1)==1)
-            {
-                u = parent[u][j];
-            }
-        }
-
-        if(u==v)
-        {
-            return rev.get(u);
-        }
-
-        for(int j=col-1;j>=0;j--)
-        {
-            if(parent[u][j]!=-1 && parent[u][j]!=parent[v][j])
-            {
-                u = parent[u][j];
-                v = parent[v][j];
-            }
-        }
-
-        return rev.get(parent[u][0]);
+        lca(root, p, q);
+        return ans;
     }
 
-    void number(TreeNode root)
+    public int lca(TreeNode root, TreeNode p, TreeNode q)
     {
-        if(root==null) return;
+        if(root==null){
+            return 0;
+        }
 
-        map.put(root,idx++);
-        rev.add(root);
+        int left = lca(root.left, p, q);
+        int right = lca(root.right, p, q);
+        int self = 0;
 
-        number(root.left);
-        number(root.right);
-    }
+        if(root==p || root==q){
+            self=1;
+        }
 
-    void dfs(TreeNode root,int par,int d,int[][] parent,int[] depth)
-    {
-        if(root==null) return;
+        int total = left+right+self;
+        if(total==2 && ans==null){
+            ans=root;
+        }
 
-        int cur = map.get(root);
-
-        parent[cur][0]=par;
-        depth[cur]=d;
-
-        dfs(root.left,cur,d+1,parent,depth);
-        dfs(root.right,cur,d+1,parent,depth);
+        return total;
     }
 }
