@@ -1,72 +1,41 @@
 class Solution {
-    public int minFlips(String s) 
+    public int minFlips(String s)
     {
-        int n =s.length();
-        String t = s+s;
+        int n = s.length();
+        s = s+s;
+        int min = Integer.MAX_VALUE;
 
-        int low=0 , count1=0 , count2=0 , ans=n , high=0 ;
-        for(high =0 ; high<2*n ; high++)
+        StringBuilder s1 = new StringBuilder();
+        StringBuilder s2 = new StringBuilder();
+
+        for (int i = 0; i < 2 * n; i++) {
+            s1.append(i % 2 == 0 ? '1' : '0');
+            s2.append(i % 2 == 0 ? '0' : '1');
+        }
+
+        int low=0, flip1=0, flip2=0;
+        for(int high=0 ; high<2*n ; high++)
         {
-            char x = t.charAt(high);
-            if(high%2==0)
-            {
-                if(x!='0')
-                {
-                    count1++;
-                }
-                if(x!='1')
-                {
-                    count2++;
-                }
+            if(s.charAt(high)!=s1.charAt(high)){
+                flip1++;
+            }if(s.charAt(high)!=s2.charAt(high)){
+                flip2++;
             }
 
-            else
-            {
-                if(x!='1')
-                {
-                    count1++;
-                }
-                if(x!='0')
-                {
-                    count2++;
-                }
-            }
-
-            if(high-low+1>n)
-            {
-                char d = t.charAt(low);
-
-                if(low%2==0)
-                {
-                    if(d!='0')
-                    {
-                        count1--;
-                    }
-                    if(d!='1')
-                    {
-                        count2--;
-                    }
-                }
-                else
-                {
-                    if(d!='1')
-                    {
-                        count1--;
-                    }
-                    if(d!='0')
-                    {
-                        count2--;
-                    }
+            while(high-low+1 > n){
+                if(s.charAt(low)!=s1.charAt(low)){
+                    flip1--;
+                }if(s.charAt(low)!=s2.charAt(low)){
+                    flip2--;
                 }
                 low++;
             }
 
-            if(high-low+1==n)
-            {
-                ans = Math.min(ans , Math.min(count1 , count2));
-            }            
-        } 
+            if(high-low+1==n){
+                min = Math.min(min, Math.min(flip1, flip2));
+            }
+        }       
 
-        return ans;
+        return min==Integer.MAX_VALUE ? 0 : min;
     }
 }
