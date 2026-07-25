@@ -1,54 +1,42 @@
 class Solution {
-    public int search(int[] arr, int target) 
-    {
-        int l = 0 , r = arr.length-1;
+    public int search(int[] nums, int target) {
+        int originalFirst = getOriginalStart(nums);
 
-        int res = ModifiedBS(arr , target , l , r);
+        int firstHalf = searchNow(nums, target, 0, originalFirst - 1);
+        int secondHalf = searchNow(nums, target, originalFirst, nums.length - 1);
 
-        return res;
+        return firstHalf == -1 ? secondHalf : firstHalf;
     }
 
-    public int ModifiedBS(int arr[] , int target , int l , int r)
-    {
-        if(l>r)
-        {
-            return -1;
-        }
+    public int getOriginalStart(int[] arr) {
+        int low = 0, high = arr.length - 1;
 
-        int n = arr.length;
-        int mid = l + (r-l) / 2;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
 
-        if(arr[mid]==target)
-        {
-            return mid;
-        }
-
-        //is in right
-        if(arr[mid]>=arr[l])
-        {
-            if(arr[mid]>=target && arr[l]<=target)
-            {
-                return ModifiedBS(arr , target , l , mid-1);
-            }
-
-            else
-            {
-                return ModifiedBS(arr , target , mid+1 , r);
-            }
-        }  
-        
-        //is int left
-        else
-        {
-            if(arr[mid]<=target && arr[r]>=target)
-            {
-               return ModifiedBS(arr , target , mid+1 , r);
-            }
-
-            else
-            {
-                return ModifiedBS(arr , target , l , mid-1);
+            if (arr[mid] > arr[high]) {
+                low = mid + 1;
+            } else {
+                high = mid;
             }
         }
+
+        return low;
+    }
+
+    public int searchNow(int[] arr, int k, int low, int high) {
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (arr[mid] < k) {
+                low = mid + 1;
+            } else if (arr[mid] > k) {
+                high = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+
+        return -1;
     }
 }
