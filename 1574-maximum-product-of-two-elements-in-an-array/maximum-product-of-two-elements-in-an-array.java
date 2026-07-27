@@ -1,12 +1,25 @@
 class Solution {
     public int maxProduct(int[] arr) 
     {
-        int n = arr.length;
-        Arrays.sort(arr);
+        int max1=-1, max2=-1;
+        int min1=Integer.MAX_VALUE, min2=Integer.MAX_VALUE; 
 
-        int res1 = (arr[0]-1)*(arr[1]-1);
-        int res2 = (arr[n-1]-1)*(arr[n-2]-1);
+        for(int x : arr)
+        {
+            if(x>=max1){
+                max2 = max1;
+                max1 = x;
+            } else if(x>max2) max2 = x;
+        }   
 
-        return Math.max(res1, res2);    
+        for(int x : arr){
+            if(x<=min1){
+                min2 = min1;
+                min1 = x;
+            }
+            else if(x<min2) min2 = x;
+        }
+
+        return Math.max((max1-1)*(max2-1), (min1-1)*(min2-1));
     }
 }
