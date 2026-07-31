@@ -11,7 +11,7 @@ class Solution {
 
         int count=0, min=0;
         for(int i=25 ; i>=0 ; i--){
-            int mul=0;
+            /*int mul=0;
             if(count<8){
                 mul=1;
             }else if(count<16){
@@ -20,9 +20,9 @@ class Solution {
                 mul=3;
             }else{
                 mul=4;
-            }
+            }*/
             
-            int val = freq[i]*mul;
+            int val = freq[i]*((count/8)+1);
             min += val;
             count++;
         }
