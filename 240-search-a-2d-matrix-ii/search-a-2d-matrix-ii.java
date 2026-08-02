@@ -8,7 +8,6 @@ class Solution {
         int m = arr[0].length;
         int[] flat = new int[n * m];
         
-        // 1. Flatten the 2D array
         int k = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
@@ -16,10 +15,8 @@ class Solution {
             }
         }
         
-        // 2. Sort the 1D array
         Arrays.sort(flat);
         
-        // 3. Binary Search on the sorted 1D array
         int low = 0, high = flat.length - 1;
         while (low <= high) {
             int mid = low + (high - low) / 2;
