@@ -1,7 +1,14 @@
 class Solution {
     public List<Integer> findClosestElements(int[] arr, int k, int x) 
     {
-        Queue<int[]> heap = new PriorityQueue<>((a, b) -> b[0]-a[0]);
+        Queue<int[]> heap = new PriorityQueue<>((a, b) -> {
+            if(b[0]==a[0]){
+                return b[1]-a[1];
+            }
+            else{
+                return b[0]-a[0];
+            }
+        });
 
         for(int i=0 ; i<arr.length ; i++)
         {
