@@ -1,11 +1,10 @@
 class Solution {
     public int smallestNumber(int n, int t) {
         while(true){
-            if(!isValid(n, t)){
-                n++;
-            }else{
-                break;
+            if(isValid(n, t)){
+             break;
             }
+            n++;
         }
 
         return n;
