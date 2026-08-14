@@ -3,56 +3,58 @@ class Solution
     public int maxSubarraySumCircular(int[] arr) 
     {
         int n = arr.length;
-        int LinearMax = max(arr);
+        int totalSum=0;
 
-        if(LinearMax<0) return LinearMax; // all ele are -ve
-        int sum = 0;
-        for(int i=0 ; i<n ; i++)
-        {
-            sum+=arr[i];
+        for(int x : arr){
+            totalSum += x;
         }
 
-        int LinearMin = min(arr);
-        int cir = sum-LinearMin;
-        int res=0;
-        res = Math.max(res , Math.max(LinearMax , cir));
+        int linearMin = findLinearMin(arr);
+        int linearMax = findLinearMax(arr);
+
+        if(linearMax<0){
+            return linearMax;
+        }
+
+        int circularMax = totalSum-linearMin;
+        int res = Math.max(circularMax, linearMax);
 
         return res;
     }
 
-    public int max(int arr[])
-    {
+    public int findLinearMax(int arr[]){
         int n = arr.length;
 
-        int bestEnd = arr[0];
-        int res = arr[0];
+        int max = arr[0];
+        int prevMax = arr[0];
+
         for(int i=1 ; i<n ; i++)
         {
-            int v1 = arr[i];
-            int v2 = arr[i]+bestEnd;
+            int c1 = arr[i];
+            int c2 = arr[i]+prevMax;
 
-            bestEnd = Math.max(v1 , v2);
-
-            res = Math.max(res , bestEnd);
+            prevMax = Math.max(c1, c2);
+            max = Math.max(max, prevMax);
         }
-        return res;
+
+        return max;
     }
 
-    public int min(int arr[])
-    {
+    public int findLinearMin(int arr[]){
         int n = arr.length;
 
-        int bestEnd = arr[0];
-        int res = arr[0];
+        int min = arr[0];
+        int prevMin = arr[0];
+
         for(int i=1 ; i<n ; i++)
         {
-            int v1 = arr[i];
-            int v2 = arr[i]+bestEnd;
+            int c1 = arr[i];
+            int c2 = arr[i]+prevMin;
 
-            bestEnd = Math.min(v1 , v2);
-
-            res = Math.min(res , bestEnd);
+            prevMin = Math.min(c1, c2);
+            min = Math.min(min, prevMin);
         }
-        return res;
+
+        return min;
     }
 }
