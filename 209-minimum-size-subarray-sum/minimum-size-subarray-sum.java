@@ -3,19 +3,19 @@ class Solution {
     {
         int n = arr.length;
         int res = Integer.MAX_VALUE;
+        int sum=0;
 
-        int low=0, sum=0;
-        for(int high=0 ; high<n ; high++)
-        {
+        int low=0;
+        for(int high=0 ; high<n ; high++){
             sum += arr[high];
 
-            while(sum>=target)
-            {
-                res = Math.min(res, high-low+1);
-
-                sum -= arr[low];
+            while(sum>=target){
+                int len = high-low+1;
+                res = Math.min(res, len);
+                
+                sum-=arr[low];
                 low++;
-            } 
+            }
         }
 
         return res ==Integer.MAX_VALUE ? 0 : res;
