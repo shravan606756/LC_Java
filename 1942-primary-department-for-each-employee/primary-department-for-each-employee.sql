@@ -1,7 +1,7 @@
 # Write your MySQL query statement below
 #if 1 then primary, else if 'y' then primary
 
-select distinct employee_id, department_id
+select employee_id, department_id
 from employee
 where employee_id in(
     select employee_id
