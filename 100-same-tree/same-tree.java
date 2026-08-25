@@ -14,30 +14,26 @@
  * }
  */
 class Solution {
-    public boolean isSameTree(TreeNode p, TreeNode q) 
-    {
-        if(p==null && q==null)
-        {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if(p==null && q==null){
             return true;
-        }    
+        }
 
-        if(p==null || q==null)
-        {
+        if(p==null || q==null){
             return false;
         }
 
-        if(p.val!=q.val)
-        {
+        if(p.val!=q.val){
             return false;
         }
 
-        Boolean r1 = isSameTree(p.left , q.left);
-        Boolean r2 = isSameTree(p.right , q.right);
+        boolean c1 = isSameTree(p.left, q.left);
+        boolean c2 = isSameTree(p.right, q.right);
 
-        if(r1==true && r2==true)
-        {
+        if(c1==true && c2==true){
             return true;
         }
+
         return false;
     }
 }
