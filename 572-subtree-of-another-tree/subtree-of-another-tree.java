@@ -14,59 +14,50 @@
  * }
  */
 class Solution {
-    public boolean isSubtree(TreeNode root, TreeNode subRoot) 
-    {
-        if(root==null)
-        {
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+          if(subRoot==null) {
+            return true;
+        }
+
+        if(root==null) {
             return false;
         }
+        
+        boolean fullTreeIsSame = isSame(root, subRoot);
+        boolean leftIsSame = isSubtree(root.left, subRoot);
+        boolean rightIsSame = isSubtree(root.right, subRoot);
 
-        if(subRoot==null)
-        {
+        if(fullTreeIsSame){
+            return true;
+        }        
+
+        if(leftIsSame==true || rightIsSame==true){
             return true;
         }
-
-        Boolean full = isSame(root , subRoot);
-        Boolean leftHalf = isSubtree(root.left , subRoot);
-        Boolean rightHalf = isSubtree(root.right , subRoot);
-
-        if(full)
-        {
-            return true;
-        }               
-
-        if(leftHalf || rightHalf)
-        {
-            return true;
-        } 
 
         return false;
     }
 
-    public boolean isSame(TreeNode p, TreeNode q) 
-    {
-        if(p==null && q==null)
-        {
+    public boolean isSame(TreeNode r1, TreeNode r2) {
+        if(r1==null && r2==null) {
             return true;
-        }    
+        }
 
-        if(p==null || q==null)
-        {
+        if(r1==null || r2==null) {
             return false;
         }
 
-        if(p.val!=q.val)
-        {
+        if(r1.val!=r2.val) {
             return false;
         }
 
-        Boolean r1 = isSame(p.left , q.left);
-        Boolean r2 = isSame(p.right , q.right);
+        boolean c1 = isSame(r1.left, r2.left);
+        boolean c2 = isSame(r1.right, r2.right);
 
-        if(r1==true && r2==true)
-        {
+        if(c1==true && c2==true){
             return true;
         }
+
         return false;
     }
 }
