@@ -14,36 +14,29 @@
  * }
  */
 class Solution {
-    public boolean isSymmetric(TreeNode root) 
-    {
-        if(root==null)
-        {
-            return true;
-        }
-        return same(root.left , root.right);
+    public boolean isSymmetric(TreeNode root) {
+        if(root==null) return true;
+        return isSame(root.left, root.right);
     }
 
-    public boolean same(TreeNode l , TreeNode r)
+    public boolean isSame(TreeNode r1, TreeNode r2)
     {
-        if(l==null && r==null)
-        {
+        if(r1==null && r2==null){
             return true;
         }
-        if(l==null || r==null)
-        {
+
+        if(r1==null || r2==null){
             return false;
         }
 
-        if(l.val!=r.val)
-        {
+        if(r1.val!=r2.val){
             return false;
         }
 
-        boolean left = same(l.left , r.right);
-        boolean right = same(l.right , r.left);
+        boolean c1 = isSame(r1.left, r2.right);
+        boolean c2 = isSame(r1.right, r2.left);
 
-        if(left==true && right==true)
-        {
+        if(c1==true && c2==true){
             return true;
         }
 
