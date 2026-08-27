@@ -13,92 +13,78 @@
  *     }
  * }
  */
-class Solution 
-{
+class Solution {
     Stack<TreeNode> asc = new Stack<>();
     Stack<TreeNode> desc = new Stack<>();
 
-    public boolean findTarget(TreeNode root, int k) 
-    {
-        if(root==null)
-        {
+    public boolean findTarget(TreeNode root, int k) {
+        if(root==null){
             return false;
+        }    
+
+        TreeNode temp = root;
+        while(temp!=null){
+            asc.push(temp);
+            temp=temp.left;
         }
 
-        TreeNode t=root;
-
-        while(t!=null)
-        {
-            asc.push(t);
-            t = t.left;
-        }
-
-        t=root;
-        
-        while(t!=null)
-        {
-            desc.push(t);
-            t = t.right;
+        temp=root;
+        while(temp!=null){
+            desc.push(temp);
+            temp=temp.right;
         }
 
         TreeNode i = getSmall();
         TreeNode j = getBig();
 
-        while(i!=null && j!=null && i!=j)
+        while(i!=null && j!=null && i!=j && i.val<j.val)
         {
             int sum = i.val+j.val;
 
-            if(sum==k)
-            {
+            if(sum==k){
                 return true;
-            }
-
-            else if(sum<k)
-            {
+            }else if(sum<k){
                 i=getSmall();
-            }
-            else{
-                j = getBig();
+            } else{ 
+                j = getBig(); 
             }
         }
 
         return false;
-    } 
-
-    public TreeNode getSmall()
-    {
-        if(asc.isEmpty())
-        {
-            return null;
-        }
-        TreeNode poped = asc.pop();
-        TreeNode temp = poped.right;
-
-        while(temp!=null)
-        {
-            asc.push(temp);
-            temp=temp.left;
-        } 
-
-        return poped;
     }
 
-    public TreeNode getBig()
-    {
-        if(desc.isEmpty())
-        {
+    public TreeNode getSmall(){
+        if(asc.isEmpty()){
             return null;
         }
 
-        TreeNode poped = desc.pop();
-        TreeNode temp = poped.left;
+        TreeNode small = asc.peek();
+        asc.pop();
 
-        while(temp!=null)
-        {
-            desc.push(temp);
-            temp=temp.right;
+        TreeNode rightChild = small.right;
+
+        while(rightChild!=null){
+            asc.push(rightChild);
+            rightChild=rightChild.left;
         }
 
-        return poped;
+        return small;
+    }
+
+    public TreeNode getBig(){
+        if(desc.isEmpty()){
+            return null;
+        }
+
+        TreeNode big = desc.peek();
+        desc.pop();
+        TreeNode leftChild = big.left;
+        
+        while(leftChild!=null){
+            desc.push(leftChild);
+            leftChild = leftChild.right;
+        }
+
+        return big;
     }
 }
