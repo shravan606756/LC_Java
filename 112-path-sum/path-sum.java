@@ -14,39 +14,35 @@
  * }
  */
 class Solution {
-    public boolean hasPathSum(TreeNode root, int targetSum) 
-    {
-        return func(root , targetSum , 0);
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if(root==null){
+            return false;
+        }
+        return pathExist(root, targetSum, 0);
     }
 
-    boolean func(TreeNode root , int k , int sum)
-    {
-        if(root==null)
-        {
+    public boolean pathExist(TreeNode root, int k, int sum){
+        if(root==null){
             return false;
         }
 
-        sum = sum+root.val;
-        if(isLeaf(root))
-        {
+        sum += root.val;
+        if(isLeaf(root)){
             return sum==k;
         }
 
-        boolean left = func(root.left , k , sum);
-        boolean right = func(root.right , k , sum);
+        boolean left = pathExist(root.left, k, sum);
+        boolean right = pathExist(root.right, k, sum);
 
-        if(left==true || right==true)
-        {
+        if(left || right){
             return true;
         }
 
         return false;
     }
 
-    boolean isLeaf(TreeNode root)
-    {
-        if(root.left==null && root.right==null)
-        {
+    public boolean isLeaf(TreeNode root){
+        if(root.right==null && root.left==null){
             return true;
         }
 
