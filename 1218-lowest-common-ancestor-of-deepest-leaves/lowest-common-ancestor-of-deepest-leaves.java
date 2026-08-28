@@ -1,58 +1,64 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
-class Solution 
-{
-    class pair
-    {
-        int d;
-        TreeNode n;
+class Solution {
+    int maxD = 0;
+    TreeNode ans = null;
+    int totalDeepN=0;
 
-        pair(int d , TreeNode n)
-        {
-            this.d=d;;
-            this.n=n;
+    public TreeNode lcaDeepestLeaves(TreeNode root) {
+        if(root==null){
+            return null;
         }
+
+        getDepth(root, 0);
+        countTotalDeepestNodes(root, 0);
+        lca(root, 0);
+
+        return ans;
     }
 
-    public TreeNode lcaDeepestLeaves(TreeNode root)
-    {
-        return solve(root).n;
+    public void getDepth(TreeNode root, int d){
+        if(root==null){
+            return;
+        }
+
+        maxD = Math.max(maxD, d);
+
+        getDepth(root.left, d+1);
+        getDepth(root.right, d+1);
     }
 
-    pair solve(TreeNode root)
-    {
-        if(root==null)
-        {
-            return new pair(0,null);
-        }
-        
-        pair left = solve(root.left);
-        pair right = solve(root.right);
-
-        if(left.d==right.d)
-        {
-            return new pair(left.d+1 , root);
+    public int lca(TreeNode root, int d){
+        if(root==null){
+            return 0;
         }
 
-        if(left.d>right.d)
-        {
-            return new pair(left.d+1 , left.n);
+        int left = lca(root.left, d+1);
+        int right = lca(root.right, d+1);
+
+        int self = 0;
+
+        if(root.left==null && root.right==null && d==maxD){
+            self = 1;
         }
 
-        
-        return new pair(right.d+1 , right.n);
+        int total = left+right+self;
+
+        if(total==totalDeepN && ans==null){
+            ans=root;
+        }
+
+        return total;
+    }
+
+    public void countTotalDeepestNodes(TreeNode root, int d){
+        if(root==null){
+            return ;
+        }
+
+        if(d==maxD){
+            totalDeepN+=1;
+        }
+
+        countTotalDeepestNodes(root.left, d+1);
+        countTotalDeepestNodes(root.right, d+1);
     }
 }
