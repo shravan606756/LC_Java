@@ -14,36 +14,33 @@
  * }
  */
 class Solution {
+    Map<Integer, Integer> map = new HashMap<>();
+    int idx;
     public TreeNode buildTree(int[] inorder, int[] postorder) 
     {
         int n = postorder.length;
-
-        int idx[] = new int [1];
-        idx[0] = n-1;
-
-        HashMap<Integer , Integer> map = new HashMap<>();
+        idx = n-1;
         for(int i=0 ; i<n ; i++)
         {
-            map.put(inorder[i] , i);
-        }    
+            map.put(inorder[i], i);
+        }
 
-        return func(postorder , inorder , map , idx , n, 0 , n-1);
+        return sol(postorder, 0, n-1);
     }
 
-    public TreeNode func(int postorder[] , int inorder[] ,HashMap<Integer , Integer>map ,int idx[] , int n , int low , int high)
-    {
-        if(low>high)
-        {
+    public TreeNode sol(int [] postorder, int low, int high){
+
+        if(low>high){
             return null;
         }
 
-        int rootVal = postorder[idx[0]];
-        TreeNode root = new TreeNode(rootVal);
-        int id = map.get(rootVal);
-        idx[0]--;
+        TreeNode root = new TreeNode(postorder[idx]);
+        idx--;
 
-        root.right = func(postorder , inorder , map ,idx , n , id+1 , high);
-        root.left = func(postorder , inorder , map ,idx , n , low , id-1);
+        int id = map.get(root.val);
+
+        root.right = sol(postorder, id+1, high);
+        root.left = sol(postorder, low, id-1);
 
         return root;
     }
