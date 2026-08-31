@@ -14,40 +14,43 @@
  * }
  */
 class Solution {
-    public List<List<Integer>> pathSum(TreeNode root, int targetSum) 
-    {
-        List<List<Integer>> list = new ArrayList<>();
-        func(root , targetSum , list , new ArrayList<>() , 0);
-        return list;    
+    List<List<Integer>> res = new ArrayList<>();
+
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        if(root==null){
+            return res;
+        }
+
+        List<Integer> path = new ArrayList<>();
+
+        sol(root, targetSum, path, 0);
+
+        return res;
     }
 
-    public void func(TreeNode root , int k , List<List<Integer>> list, List<Integer> path , int sum)
-    {
-        if(root==null)
-        {
+    public void sol(TreeNode root, int k, List<Integer> path, int sum){
+        if(root==null){
             return;
         }
-
+        
+        sum += root.val;
         path.add(root.val);
-        sum=sum+root.val;
 
-        if(isLeaf(root) && sum==k)
-        {
-            list.add(new ArrayList<>(path));
+        if(isLeaf(root) && sum==k){
+            res.add(new ArrayList(path));
         }
 
-        func(root.left , k , list ,path, sum);
-        func(root.right , k , list ,path, sum);
+        sol(root.left, k, path, sum);
+        sol(root.right, k, path, sum);
 
         path.remove(path.size()-1);
     }
 
-    public boolean isLeaf(TreeNode root)
-    {
-        if(root.left==null && root.right==null)
-        {
+    public boolean isLeaf(TreeNode root){
+        if(root.left==null && root.right==null){
             return true;
         }
+
         return false;
     }
 }
