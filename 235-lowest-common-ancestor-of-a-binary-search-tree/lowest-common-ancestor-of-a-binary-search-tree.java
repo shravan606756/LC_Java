@@ -44,7 +44,7 @@ class Solution
             lca(root.right, p, q);
         }
 
-        if(root.val>p.val){
+        if(root.val>q.val){
             lca(root.left, p, q);
         }
 
