@@ -7,46 +7,61 @@ class Solution
 
         if(n1>n2) return false;
 
-        int have[] = new int [128];
-        int need[] = new int [128];
+        Map<Character, Integer> have = new HashMap<>();
+        Map<Character, Integer> need = new HashMap<>();
 
-        for(char x : s1.toCharArray())
-        {
-            need[x]++;
+        for(char c : s1.toCharArray()){
+            have.put(c, have.getOrDefault(c, 0)+1);
         }
 
-        int high=0;
+        int high=0, low=0;
 
-        for(high = 0 ; high<n1 ; high++)
-        {
-            have[s2.charAt(high)]++;
+        for(high=0; high<s1.length() ; high++){
+            need.put(s2.charAt(high), need.getOrDefault(s2.charAt(high), 0)+1);
         }
-        if(isValid(have , need)) return true;
-        int low=0;
-        while(high<n2)
-        {
-            have[s2.charAt(low)]--;
+
+        if(isValid(need, have)){
+            return true;
+        }
+
+        while(high<s2.length()){
+            int count = need.get(s2.charAt(low));
+            count --;
+
+            if(count==0){
+                need.remove(s2.charAt(low));
+            }else{
+                need.put(s2.charAt(low), count);
+            }
             low++;
 
-            
-
-            have[s2.charAt(high)]++;
+            need.put(s2.charAt(high), need.getOrDefault(s2.charAt(high), 0)+1);
             high++;
 
-            if(isValid(have , need)) return true;
-        }   
-        return false;    
+            if(isValid(need, have)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public static boolean isValid(int arr[] , int arr1[])
+    public boolean isValid(Map<Character, Integer> need, Map<Character, Integer>have)
     {
-        for(int i=0 ; i<128 ; i++)
-        {
-            if(arr[i]!=arr1[i])
-            {
+        for(char key : need.keySet()){
+            if(!have.containsKey(key)){
+                return false;
+            }
+
+            if(need.size() != have.size()){
+                return false;
+            }
+
+            if(!need.get(key).equals(have.get(key))){
                 return false;
             }
         }
+
         return true;
     }
 }
