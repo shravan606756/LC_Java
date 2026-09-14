@@ -6,7 +6,6 @@ class Solution {
         int commonWidth = Math.min(rec1X2, rec2X2) - Math.max(rec1X1, rec2X1);
         int commonLength =Math.min(rec1Y2, rec2Y2) - Math.max(rec1Y1, rec2Y1);
 
-        //int commonArea = commonWidth*commonLength;
         return commonWidth>0 && commonLength>0 ? true : false;
     }
 }
