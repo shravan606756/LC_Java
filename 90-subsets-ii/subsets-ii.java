@@ -7,39 +7,25 @@ class Solution {
         n = arr.length;
         Arrays.sort(arr);
 
-        Set<List<Integer>> set = new HashSet<>();
-        List<List<Integer>> finalRes = new ArrayList<>();
-
         solve(arr, 0);
 
-        for(int i=0 ; i<res.size() ; i++){
-            List<Integer> temp = res.get(i);
-
-            if(set.contains(temp)){
-                continue;
-            }
-
-            finalRes.add(temp);
-            set.add(temp);
-        }
-
-        return finalRes;
+        return res;
     }
 
     public void solve(int arr[], int idx)
     {
-        if(idx==n){
-            res.add(new ArrayList<>(ans));
-            return;
+        res.add(new ArrayList<>(ans));
+
+        for(int i=idx ; i<n ; i++)
+        {
+            if(i>idx && arr[i]==arr[i-1]){
+                continue;
+            }
+
+            ans.add(arr[i]);
+            solve(arr, i+1);
+
+            ans.remove(ans.size()-1);
         }
-
-        //skip
-        solve(arr, idx+1);
-
-        //take
-        ans.add(arr[idx]);
-        solve(arr, idx+1);
-
-        ans.remove(ans.size()-1);
     }
 }
