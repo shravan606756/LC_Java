@@ -1,7 +1,8 @@
 public class Solution {
     private List<List<String>> result = new ArrayList<>();
 
-    public List<List<String>> solveNQueens(int n) {
+    public List<List<String>> solveNQueens(int n) 
+    {
         if (n == 0) return result;
         
         List<String> board = new ArrayList<>();
