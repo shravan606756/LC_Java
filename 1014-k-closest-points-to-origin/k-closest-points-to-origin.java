@@ -1,36 +1,49 @@
 class Solution {
-    public int[][] kClosest(int[][] points, int k) 
-    {
-        Queue<int[]> heap = new PriorityQueue<>((a,b) -> b[0]-a[0]);
+    public int[][] kClosest(int[][] points, int k) {
+        int n = points.length;
 
-        for(int i=0 ; i<points.length ; i++)
+        Queue<Pair> maxHeap = new PriorityQueue<>((a, b) -> b.val-a.val);
+        
+        for(int i=0 ; i<n ; i++)
         {
-            int index = i;
             int temp[] = points[i];
             int x = temp[0];
             int y = temp[1];
 
-            int value =(x*x) + (y*y);
+            int index = i;
+            int value = x*x + y*y;
 
-            int curr[] = {value, index};
+            Pair currPair = new Pair(index, value);
 
-            if(heap.size()<k){
-                heap.add(curr);
-            }else if(curr[0]<heap.peek()[0]){
-                heap.poll();
-                heap.add(curr);
+            if(maxHeap.size()<k){
+                maxHeap.offer(currPair);
+            }else{
+                if(currPair.val>maxHeap.peek().val){
+                    continue;
+                }
+
+                maxHeap.poll();
+                maxHeap.offer(currPair);
             }
         }
 
         int res[][] = new int[k][2];
-        int idx = k-1;
 
-        while(!heap.isEmpty()){
-            int temp[] = heap.poll();
-            res[idx] = points[temp[1]];
-            idx--;
+        for(int i=0 ; i<k ; i++)
+        {
+            Pair temp = maxHeap.poll();
+            res[i] = points[temp.idx];  
         }
 
         return res;
+    }
+
+    class Pair{
+        int idx, val;
+
+        public Pair(int idx, int val){
+            this.idx = idx;
+            this.val = val;
+        }
     }
 }
