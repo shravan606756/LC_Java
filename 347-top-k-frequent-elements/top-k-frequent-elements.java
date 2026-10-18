@@ -1,12 +1,16 @@
 class Solution {
     public int[] topKFrequent(int[] arr, int k) {
-        Queue<Pair> heap = new PriorityQueue<>((a,b)->{
-            if(a.frequency==b.frequency){
-                return a.number-b.number;
-            }else{
-                return a.frequency-b.frequency;
+        int n = arr.length;
+
+        Queue<Pair> minHeap = new PriorityQueue<>(
+            (a, b) -> {
+                int x = a.freq, y = b.freq;
+                if(x!=y){
+                    return x-y;
+                }
+                return a.number - b.number;
             }
-        });
+        );
 
         Map<Integer, Integer> map = new HashMap<>();
 
@@ -16,39 +20,35 @@ class Solution {
 
         for(Map.Entry<Integer, Integer> entry : map.entrySet()){
             int key = entry.getKey();
-            int freq = entry.getValue();
+            int val = entry.getValue();
 
-            Pair curr = new Pair(freq, key);
+            Pair currPair = new Pair(key, val);
 
-            if(heap.size()<k){
-                heap.add(curr);
+            if(minHeap.size()<k){
+                minHeap.offer(currPair);
             }else{
-                if(curr.frequency<heap.peek().frequency){
+                if(minHeap.peek().freq > currPair.freq){
                     continue;
                 }
-
-                heap.poll();
-                heap.add(curr);
+                minHeap.poll();
+                minHeap.offer(currPair);
             }
         }
 
         int res[] = new int[k];
 
-        for(int i=k-1 ; i>=0 ; i--)
-        {
-            res[i] = heap.poll().number;
+        for(int i=0 ; i<k ; i++){
+            res[i] = minHeap.poll().number;
         }
 
         return res;
     }
-}
- 
-class Pair {
-    int frequency =0;
-    int number = 0;
 
-    public Pair(int frequency, int number) {
-        this.frequency = frequency;
-        this.number = number;
+    class Pair{
+        int number, freq;
+        public Pair(int number, int freq){
+            this.number = number;
+            this.freq = freq;
+        }
     }
 }
