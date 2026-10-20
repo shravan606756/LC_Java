@@ -1,31 +1,31 @@
 import java.util.Arrays;
 
 class Solution {
-    public int sortableIntegers(int[] nums) {
+    public int sortableIntegers(int[] nums){
         int n = nums.length;
         int[] sorted = nums.clone();
         Arrays.sort(sorted);
 
         int result = 0;
 
-        for (int k = 1; k <= n; k++) {
+        for (int k = 1; k <= n; k++){
             if (n % k != 0) {
                 continue;
             }
 
             boolean valid = true;
 
-            for (int start = 0; start < n; start += k) {
-                int[] vec1 = Arrays.copyOfRange(nums, start, start + k);
-                int[] vec2 = Arrays.copyOfRange(sorted, start, start + k);
+            for (int start = 0; start < n; start += k){
+                int[] arr1 = Arrays.copyOfRange(nums, start, start + k);
+                int[] arr2 = Arrays.copyOfRange(sorted, start, start + k);
 
-                if (!isRotation(vec1, vec2)) {
+                if (!isRotation(arr1, arr2)){
                     valid = false;
                     break;
                 }
             }
 
-            if (valid) {
+            if (valid){
                 result += k;
             }
         }
@@ -33,15 +33,15 @@ class Solution {
         return result;
     }
 
-    private boolean isRotation(int[] a, int[] b) {
+    private boolean isRotation(int[] a, int[] b){
         StringBuilder sa = new StringBuilder();
         StringBuilder sb = new StringBuilder();
 
-        for (int x : a) {
+        for (int x : a){
             sa.append(x).append(",");
         }
 
-        for (int x : b) {
+        for (int x : b){
             sb.append(x).append(",");
         }
 
